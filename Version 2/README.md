@@ -351,26 +351,6 @@ This project helped me practice several important Java concepts:
 
 ---
 
-## 🔮 Future Improvements
-
-Some features that could be added in future versions:
-
-* [ ] Add student name update functionality
-* [ ] Add Student ID update functionality
-* [ ] Add attendance management
-* [ ] Add subject-wise marks
-* [ ] Add GPA calculation
-* [ ] Add multiple subjects for each student
-* [ ] Add database deletion option
-* [ ] Improve database file format
-* [ ] Add confirmation before deleting a student
-* [ ] Add graphical user interface (GUI)
-* [ ] Connect the application to a database such as MySQL
-* [ ] Add login/authentication system
-* [ ] Generate student reports
-
----
-
 ## 👨‍💻 Author
 
 **Aaditya Raj Singhaniya**
