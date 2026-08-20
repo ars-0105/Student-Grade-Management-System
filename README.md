@@ -359,25 +359,6 @@ If you want to understand a specific version in detail, **open the README file i
 
 ---
 
-# 🔮 Future Improvements
-
-Possible future improvements for the project include:
-
-* [ ] Student name update
-* [ ] Student ID update
-* [ ] Attendance management
-* [ ] Subject-wise marks
-* [ ] GPA calculation
-* [ ] Multiple subjects for each student
-* [ ] Database deletion
-* [ ] Improved database format
-* [ ] GUI improvements
-* [ ] MySQL database integration
-* [ ] Login/authentication system
-* [ ] Student report generation
-
----
-
 # 👨‍💻 Author
 
 **Aaditya Raj Singhaniya**
