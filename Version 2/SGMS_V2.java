@@ -33,9 +33,10 @@ class Student{
     else{
         return "F ( FAIL )";
     }
-}
+ }
     
 }
+
 public class SGMS_V2 {
                                                              // MAIN_MENU
 
