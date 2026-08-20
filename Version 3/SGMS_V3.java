@@ -33,7 +33,6 @@ class Student {
     }
 }
 
-
 public class SGMS_V3 extends JFrame {
 
     // =========================
