@@ -31,9 +31,10 @@ class Student{
     else{
         return "F ( FAIL )";
     }
-}
+ }
     
 }
+
 public class SGMS {
 
     // Function to Add students
