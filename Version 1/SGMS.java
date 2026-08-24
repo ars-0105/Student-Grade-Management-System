@@ -68,7 +68,7 @@ public class SGMS {
     student.sort(Comparator.comparingInt(s -> s.ID));
     }
     
-    // Function to remove students
+     // Function to remove students
     
     static void remS(Scanner sc, ArrayList<Student> student){
         System.out.print("Enter Student ID : ");
