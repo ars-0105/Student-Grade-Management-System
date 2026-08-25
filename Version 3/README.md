@@ -1,8 +1,8 @@
 # 🎓 Student Grade Management System – V3
 
-A simple **Java-based Student Grade Management System** with a **Graphical User Interface (GUI)** that allows users to create and load student databases, add, remove, and update student records, as well as display class statistics through an easy-to-use graphical interface.
+A simple **Java-based Student Grade Management System** with a **Graphical User Interface (GUI)** that allows users to create, load, and delete student databases, add, remove, and update student records, and view class statistics through an easy-to-use graphical interface.
 
-This is **Version 3** of my Student Grade Management System. It builds upon Version 2 by converting the previous **console-based system into a GUI-based desktop application using Java Swing**, while keeping file handling, data persistence, input validation, automatic sorting, and grade assignment.
+This is **Version 3** of my Student Grade Management System. It builds upon Version 2 by converting the previous console-based system into a **GUI-based desktop application using Java Swing**, while keeping file handling, data persistence, input validation, automatic sorting, grade assignment, and exception handling.
 
 ---
 
@@ -11,10 +11,12 @@ This is **Version 3** of my Student Grade Management System. It builds upon Vers
 * 🖥️ **Java Swing GUI**
   * Converted the previous console-based system into a graphical desktop application.
   * Uses buttons, dialogs, tables, and message boxes for interaction.
+  * Uses `JFrame` as the main application window.
 
 * 🗄️ **Create New Database**
   * Creates a new student database as a `.txt` file.
   * Prevents duplicate database names.
+  * Validates empty database names.
   * Uses a GUI dialog for database creation.
 
 * 📂 **Load Existing Database**
@@ -22,41 +24,55 @@ This is **Version 3** of my Student Grade Management System. It builds upon Vers
   * Allows the user to select a database through a GUI dialog.
   * Loads student records into an `ArrayList<Student>`.
   * Displays loaded students directly in a `JTable`.
+  * Automatically sorts students by Student ID after loading.
+
+* 🗑️ **Delete Existing Database**
+  * Displays all available `.txt` databases.
+  * Allows the user to select a database to delete.
+  * Asks for confirmation before deletion.
+  * Clears the currently loaded data if the deleted database was active.
 
 * ➕ **Add Student**
   * Adds a student using ID, name, and marks.
   * Prevents duplicate Student IDs.
-  * Validates ID, name, and marks.
+  * Validates Student ID, name, and marks.
   * Marks must be between `0` and `100`.
   * Student names can contain alphabets and spaces only.
   * The dialog remains open after invalid input so previously entered information is not lost.
+  * Automatically sorts students by ID.
   * Automatically saves the student after successful addition.
+  * Automatically refreshes the table.
 
 * 🗑️ **Remove Student**
   * Removes a student using their Student ID.
   * Displays student details before deletion.
   * Asks for confirmation before removing the student.
   * Automatically saves the updated database.
+  * Automatically refreshes the table.
 
 * ✏️ **Update Marks**
   * Updates marks using the Student ID.
   * Validates marks between `0` and `100`.
   * Automatically updates the student's grade.
   * Automatically saves the changes.
+  * Automatically refreshes the table.
 
 * 📋 **Student Table**
   * Displays all loaded students directly in a `JTable`.
   * Shows No., ID, Name, Marks, and Grade.
+  * Table cells are not directly editable.
   * Automatically refreshes after changes.
 
 * 📊 **Class Statistics**
   * Displays total students.
   * Displays passed and failed students.
   * Calculates average marks.
-  * Displays highest and lowest marks.
+  * Displays highest marks.
+  * Displays lowest marks.
 
 * 🔤 **Automatic Sorting**
   * Students are sorted in ascending order by Student ID.
+  * Uses `Comparator` and lambda expressions.
 
 * 🔄 **Refresh**
   * Refreshes the student table to show the latest data.
@@ -65,10 +81,16 @@ This is **Version 3** of my Student Grade Management System. It builds upon Vers
   * Student records are stored in `.txt` files.
   * Data is loaded when a database is opened.
   * Changes are automatically saved after adding, removing, or updating students.
+  * Uses `BufferedReader` for reading database files.
+  * Uses `BufferedWriter` for writing database files.
 
 * 🛡️ **Input Validation & Exception Handling**
-  * Handles invalid IDs, duplicate IDs, invalid names, and invalid marks.
+  * Handles invalid IDs.
+  * Prevents duplicate IDs.
+  * Handles invalid names.
+  * Handles invalid marks.
   * Uses `NumberFormatException` to prevent crashes from invalid numeric input.
+  * Uses `IOException` handling for file operations.
   * Displays errors through `JOptionPane`.
 
 ---
@@ -77,11 +99,11 @@ This is **Version 3** of my Student Grade Management System. It builds upon Vers
 
 | Marks | Grade |
 |---|---|
-| 90–100 | A (PASS) |
-| 80–89 | B (PASS) |
-| 70–79 | C (PASS) |
-| 60–69 | D (PASS) |
-| Below 60 | F (FAIL) |
+| 90–100 | A ( PASS ) |
+| 80–89 | B ( PASS ) |
+| 70–79 | C ( PASS ) |
+| 60–69 | D ( PASS ) |
+| Below 60 | F ( FAIL ) |
 
 ---
 
@@ -109,11 +131,17 @@ This is **Version 3** of my Student Grade Management System. It builds upon Vers
 * **JFrame**
 * **JPanel**
 * **JButton**
+* **JLabel**
+* **JTextField**
 * **JTable**
+* **JScrollPane**
 * **JOptionPane**
 * **DefaultTableModel**
 * **BufferedReader**
 * **BufferedWriter**
+* **File**
+* **FileReader**
+* **FileWriter**
 * **File Handling**
 * **Exception Handling**
 * **Object-Oriented Programming (OOP)**
@@ -132,13 +160,34 @@ Student-Grade-Management-System/
 
 ---
 
-## 🚀 How to Run
+## ⚙️ Requirements
 
-### 1. Clone the Repository
+Before running the project, make sure you have:
+
+* **Java Development Kit (JDK)**
+* **JDK 8 or later**
+* A code editor or Java IDE such as:
+  * IntelliJ IDEA
+  * Eclipse
+  * VS Code
+  * NetBeans
+  * Or any editor with a Java compiler
+
+No external libraries are required because the project uses Java's built-in Swing and I/O classes.
+
+---
+
+## 🚀 How to Install / Run
+
+### 1. Download or Clone the Repository
+
+Clone the repository using Git:
 
 ```bash
 git clone <your-repository-url>
 ```
+
+Or download the repository as a ZIP file from GitHub and extract it.
 
 ### 2. Navigate to the Project Folder
 
@@ -160,7 +209,7 @@ java SGMS_V3
 
 The **Student Grade Management System GUI** will open.
 
-> Make sure Java JDK is installed and `javac` and `java` are available in your system PATH.
+> Make sure `javac` and `java` are available in your system PATH.
 
 ---
 
@@ -168,14 +217,14 @@ The **Student Grade Management System GUI** will open.
 
 ### Main Menu
 
-When the program starts, the main menu provides:
-
 ```text
 Student Grade Management System
 
 [ Create New Database ]
 
 [ Load Existing Database ]
+
+[ Delete Existing Database ]
 
 [ Exit ]
 ```
@@ -198,7 +247,7 @@ No.   ID       Name             Marks       Grade
 [ Statistics ]  [ Refresh ]        [ Main Menu ]
 ```
 
-Since all students are already visible in the table, separate **View All Students** and **Search Student** options were removed in Version 3.
+All loaded students are displayed directly in the table.
 
 ---
 
@@ -224,13 +273,9 @@ Database created successfully!
 
 A file named `ClassA.txt` will be created.
 
----
-
 ### Loading a Database
 
-Click **Load Existing Database**.
-
-Available `.txt` databases are displayed:
+Click **Load Existing Database** and select one of the available `.txt` files:
 
 ```text
 Select Database:
@@ -240,13 +285,23 @@ ClassB.txt
 ClassC.txt
 ```
 
-After selecting a database, its student records are loaded and displayed automatically in the table.
+The selected database is loaded and displayed in the table.
 
----
+### Deleting a Database
+
+Click **Delete Existing Database** and select a database:
+
+```text
+Select Database to Delete:
+
+ClassA.txt
+ClassB.txt
+ClassC.txt
+```
+
+The program asks for confirmation before permanently deleting the selected database.
 
 ### Adding a Student
-
-Click **Add Student**:
 
 ```text
 Student ID:   [ 101 ]
@@ -262,32 +317,26 @@ After successful validation:
 Student added successfully!
 ```
 
-The new student appears in the table and is saved to the database.
-
----
+The student is added to the `ArrayList`, sorted by ID, saved to the database, and displayed in the table.
 
 ### Invalid Input Handling
 
-If invalid marks are entered:
+For invalid marks:
 
 ```text
 Marks (%): abc
 ```
 
-the program displays:
+The program displays:
 
 ```text
 Invalid marks!
 Please enter a valid number.
 ```
 
-The **Add Student dialog remains open**, and the previously entered ID and name remain in their fields. This allows the user to correct the invalid value without entering all information again.
-
----
+The Add Student dialog remains open and previously entered information is preserved.
 
 ### Removing a Student
-
-Click **Remove Student** and enter an ID:
 
 ```text
 Enter Student ID:
@@ -295,7 +344,7 @@ Enter Student ID:
 [ 101 ]
 ```
 
-If found, the program displays the student's details and asks for confirmation:
+If found:
 
 ```text
 Remove student:
@@ -309,13 +358,7 @@ Marks: 87.0
 
 After confirmation, the student is removed and the database is updated.
 
----
-
 ### Updating Marks
-
-Click **Update Marks** and enter the Student ID.
-
-For example:
 
 ```text
 Student: Rahul
@@ -326,21 +369,16 @@ Enter New Marks:
 [ 92 ]
 ```
 
-The marks and grade are updated automatically:
+The grade changes automatically:
 
 ```text
 87 → B ( PASS )
-
 92 → A ( PASS )
 ```
 
 The updated data is saved to the database.
 
----
-
 ### Class Statistics
-
-Click **Statistics** to display:
 
 ```text
 CLASS STATISTICS
@@ -381,7 +419,7 @@ Whenever a student is added, removed, or updated, the modified data is written b
 
 ---
 
-## 🔄 Version 3 Upgrades
+## 🔄 Version 3 Updates
 
 Version 3 introduces the following improvements over Version 2:
 
@@ -389,16 +427,18 @@ Version 3 introduces the following improvements over Version 2:
 2. ✅ Student records displayed directly in a `JTable`
 3. ✅ GUI-based database creation
 4. ✅ GUI-based database loading
-5. ✅ GUI-based Add Student operation
-6. ✅ GUI-based Remove Student operation
-7. ✅ GUI-based Update Marks operation
-8. ✅ GUI-based Class Statistics
-9. ✅ GUI-based validation and error messages
-10. ✅ Add Student dialog remains open after invalid input
-11. ✅ Removed separate View All Students option
-12. ✅ Removed separate Search Student option
-13. ✅ Added Refresh functionality
-14. ✅ Improved user experience
+5. ✅ GUI-based database deletion
+6. ✅ GUI-based Add Student operation
+7. ✅ GUI-based Remove Student operation
+8. ✅ GUI-based Update Marks operation
+9. ✅ GUI-based Class Statistics
+10. ✅ GUI-based validation and error messages
+11. ✅ Add Student dialog remains open after invalid input
+12. ✅ Automatic table refresh
+13. ✅ Automatic sorting by Student ID
+14. ✅ Automatic saving after student changes
+15. ✅ Improved database management
+16. ✅ Improved graphical user experience
 
 ### Version 1
 
@@ -433,6 +473,7 @@ Version 3 converts the project into a **GUI-based desktop application using Java
 * GUI database management
 * GUI student operations
 * GUI statistics
+* Database deletion
 * Improved input handling
 * Automatic table updates
 * Persistent `.txt` databases
@@ -453,6 +494,7 @@ Version 3 converts the project into a **GUI-based desktop application using Java
 * Updating and Removing Objects
 * Exception Handling
 * `NumberFormatException`
+* `IOException`
 * File Handling
 * `File`
 * `FileReader`
@@ -484,12 +526,6 @@ Version 3 converts the project into a **GUI-based desktop application using Java
 This project was created as part of my journey to learn and practice **Java programming, Object-Oriented Programming, Collections, Exception Handling, File Handling, and GUI development using Java Swing**.
 
 This is **Version 3** of my Student Grade Management System, built as a GUI-based improvement over my previous versions.
-
----
-
-## ⭐ Support
-
-If you found this project useful or interesting, consider giving the repository a **star ⭐** on GitHub!
 
 ---
 
