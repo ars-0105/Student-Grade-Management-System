@@ -33,7 +33,8 @@ class Student {
     }
 }
 
-public class SGMS_V3 extends JFrame {
+
+public class SGMS_V3_1 extends JFrame {
 
     // =========================
     // DATA
@@ -42,18 +43,16 @@ public class SGMS_V3 extends JFrame {
     ArrayList<Student> student = new ArrayList<>();
     File database = null;
 
+
     // =========================
     // GUI COMPONENTS
     // =========================
-
-    JTextField idField;
-    JTextField nameField;
-    JTextField marksField;
 
     JTable table;
     DefaultTableModel tableModel;
 
     JLabel databaseLabel;
+
 
     // =========================
     // COLORS / FONTS
@@ -68,7 +67,7 @@ public class SGMS_V3 extends JFrame {
     // CONSTRUCTOR
     // =========================
 
-    public SGMS_V3() {
+    public SGMS_V3_1() {
 
         setTitle("Student Grade Management System");
         setSize(950, 600);
@@ -89,9 +88,16 @@ public class SGMS_V3 extends JFrame {
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout(20, 20));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(40, 60, 40, 60));
+        mainPanel.setBorder(
+                BorderFactory.createEmptyBorder(
+                        40, 60, 40, 60
+                )
+        );
 
+
+        // =========================
         // TITLE
+        // =========================
 
         JLabel title = new JLabel(
                 "Student Grade Management System",
@@ -100,37 +106,75 @@ public class SGMS_V3 extends JFrame {
 
         title.setFont(titleFont);
 
-        mainPanel.add(title, BorderLayout.NORTH);
+        mainPanel.add(
+                title,
+                BorderLayout.NORTH
+        );
 
 
+        // =========================
         // BUTTON PANEL
+        // =========================
 
         JPanel buttonPanel = new JPanel();
 
-        buttonPanel.setLayout(new GridLayout(3, 1, 15, 15));
-
-        JButton createButton = new JButton("Create New Database");
-        JButton loadButton = new JButton("Load Existing Database");
-        JButton exitButton = new JButton("Exit");
-
-        createButton.setFont(buttonFont);
-        loadButton.setFont(buttonFont);
-        exitButton.setFont(buttonFont);
-
-        buttonPanel.add(createButton);
-        buttonPanel.add(loadButton);
-        buttonPanel.add(exitButton);
-
-        mainPanel.add(buttonPanel, BorderLayout.CENTER);
+        buttonPanel.setLayout(
+                new GridLayout(4, 1, 15, 15)
+        );
 
 
+        JButton createButton =
+                new JButton("Create New Database");
+
+        JButton loadButton =
+                new JButton("Load Existing Database");
+
+        JButton deleteButton =
+                new JButton("Delete Existing Database");
+
+        JButton exitButton =
+                new JButton("Exit");
+
+
+        JButton[] buttons = {
+                createButton,
+                loadButton,
+                deleteButton,
+                exitButton
+        };
+
+
+        for (JButton b : buttons) {
+            b.setFont(buttonFont);
+            buttonPanel.add(b);
+        }
+
+
+        mainPanel.add(
+                buttonPanel,
+                BorderLayout.CENTER
+        );
+
+
+        // =========================
         // BUTTON ACTIONS
+        // =========================
 
-        createButton.addActionListener(e -> createDatabase());
+        createButton.addActionListener(
+                e -> createDatabase()
+        );
 
-        loadButton.addActionListener(e -> loadDatabase());
+        loadButton.addActionListener(
+                e -> loadDatabase()
+        );
 
-        exitButton.addActionListener(e -> System.exit(0));
+        deleteButton.addActionListener(
+                e -> deleteDatabase()
+        );
+
+        exitButton.addActionListener(
+                e -> System.exit(0)
+        );
 
 
         add(mainPanel);
@@ -155,27 +199,41 @@ public class SGMS_V3 extends JFrame {
                     "Enter Database Name:"
             );
 
+
+            // User pressed Cancel
             if (dbName == null) {
                 return;
             }
 
+
             dbName = dbName.trim();
 
+
+            // Empty name validation
             if (dbName.isEmpty()) {
+
                 JOptionPane.showMessageDialog(
                         this,
-                        "Database name cannot be empty!"
+                        "Database name cannot be empty!",
+                        "Invalid Input",
+                        JOptionPane.ERROR_MESSAGE
                 );
+
                 continue;
             }
 
-            File f = new File(dbName + ".txt");
 
+            File f =
+                    new File(dbName + ".txt");
+
+
+            // Check if database already exists
             if (f.exists()) {
 
                 JOptionPane.showMessageDialog(
                         this,
-                        "File already exists!\nPlease use another name.",
+                        "File already exists!\n"
+                                + "Please use another name.",
                         "Error",
                         JOptionPane.ERROR_MESSAGE
                 );
@@ -188,7 +246,9 @@ public class SGMS_V3 extends JFrame {
 
                     JOptionPane.showMessageDialog(
                             this,
-                            "Database created successfully!"
+                            "Database created successfully!",
+                            "Success",
+                            JOptionPane.INFORMATION_MESSAGE
                     );
 
                     return;
@@ -197,7 +257,8 @@ public class SGMS_V3 extends JFrame {
 
                     JOptionPane.showMessageDialog(
                             this,
-                            "Error creating database:\n" + e.getMessage(),
+                            "Error creating database:\n"
+                                    + e.getMessage(),
                             "Error",
                             JOptionPane.ERROR_MESSAGE
                     );
@@ -215,49 +276,71 @@ public class SGMS_V3 extends JFrame {
 
     void loadDatabase() {
 
-        File directory = new File(".");
-        File[] files = directory.listFiles();
+        File directory =
+                new File(".");
 
-        ArrayList<File> databases = new ArrayList<>();
+        File[] files =
+                directory.listFiles();
 
+        ArrayList<File> databases =
+                new ArrayList<>();
+
+
+        // Find all TXT databases
         if (files != null) {
 
             for (File f : files) {
 
-                if (f.isFile() && f.getName().endsWith(".txt")) {
+                if (
+                        f.isFile()
+                                && f.getName().endsWith(".txt")
+                ) {
+
                     databases.add(f);
                 }
             }
         }
 
 
+        // No databases
         if (databases.isEmpty()) {
 
             JOptionPane.showMessageDialog(
                     this,
-                    "No databases found!"
+                    "No databases found!",
+                    "Load Database",
+                    JOptionPane.INFORMATION_MESSAGE
             );
 
             return;
         }
 
 
-        String[] databaseNames = new String[databases.size()];
+        // Create database name list
+        String[] databaseNames =
+                new String[databases.size()];
 
-        for (int i = 0; i < databases.size(); i++) {
-            databaseNames[i] = databases.get(i).getName();
+
+        for (int i = 0;
+             i < databases.size();
+             i++) {
+
+            databaseNames[i] =
+                    databases.get(i).getName();
         }
 
 
-        String selected = (String) JOptionPane.showInputDialog(
-                this,
-                "Select Database:",
-                "Load Database",
-                JOptionPane.PLAIN_MESSAGE,
-                null,
-                databaseNames,
-                databaseNames[0]
-        );
+        // Select database
+        String selected =
+                (String) JOptionPane.showInputDialog(
+                        this,
+                        "Select Database:",
+                        "Load Database",
+                        JOptionPane.PLAIN_MESSAGE,
+                        null,
+                        databaseNames,
+                        databaseNames[0]
+                );
 
 
         if (selected == null) {
@@ -265,6 +348,7 @@ public class SGMS_V3 extends JFrame {
         }
 
 
+        // Find selected database
         for (File f : databases) {
 
             if (f.getName().equals(selected)) {
@@ -278,12 +362,17 @@ public class SGMS_V3 extends JFrame {
         student.clear();
 
 
+        // Read database
         try {
 
             BufferedReader b =
-                    new BufferedReader(new FileReader(database));
+                    new BufferedReader(
+                            new FileReader(database)
+                    );
+
 
             String line;
+
 
             while ((line = b.readLine()) != null) {
 
@@ -291,33 +380,222 @@ public class SGMS_V3 extends JFrame {
                     continue;
                 }
 
-                String[] data = line.split(",");
 
-                int id = Integer.parseInt(data[0]);
-                String name = data[1];
-                double marks = Double.parseDouble(data[2]);
+                String[] data =
+                        line.split(",");
 
-                Student s = new Student(id, name, marks);
+
+                int id =
+                        Integer.parseInt(data[0]);
+
+                String name =
+                        data[1];
+
+                double marks =
+                        Double.parseDouble(data[2]);
+
+
+                Student s =
+                        new Student(
+                                id,
+                                name,
+                                marks
+                        );
+
 
                 student.add(s);
             }
 
+
             b.close();
+
 
             sort(student);
 
+
             JOptionPane.showMessageDialog(
                     this,
-                    "Database loaded successfully!"
+                    "Database loaded successfully!",
+                    "Success",
+                    JOptionPane.INFORMATION_MESSAGE
             );
 
+
             showOperations();
+
 
         } catch (Exception e) {
 
             JOptionPane.showMessageDialog(
                     this,
-                    "Error loading database:\n" + e.getMessage(),
+                    "Error loading database:\n"
+                            + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+
+
+    // =========================================================
+    // DELETE DATABASE
+    // =========================================================
+
+    void deleteDatabase() {
+
+        File directory =
+                new File(".");
+
+        File[] files =
+                directory.listFiles();
+
+
+        ArrayList<File> databases =
+                new ArrayList<>();
+
+
+        // Find all TXT databases
+        if (files != null) {
+
+            for (File f : files) {
+
+                if (
+                        f.isFile()
+                                && f.getName().endsWith(".txt")
+                ) {
+
+                    databases.add(f);
+                }
+            }
+        }
+
+
+        // No databases found
+        if (databases.isEmpty()) {
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "No databases found!",
+                    "Delete Database",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+
+            return;
+        }
+
+
+        // Create database name list
+        String[] databaseNames =
+                new String[databases.size()];
+
+
+        for (int i = 0;
+             i < databases.size();
+             i++) {
+
+            databaseNames[i] =
+                    databases.get(i).getName();
+        }
+
+
+        // Select database
+        String selected =
+                (String) JOptionPane.showInputDialog(
+                        this,
+                        "Select Database to Delete:",
+                        "Delete Database",
+                        JOptionPane.PLAIN_MESSAGE,
+                        null,
+                        databaseNames,
+                        databaseNames[0]
+                );
+
+
+        // User pressed Cancel
+        if (selected == null) {
+            return;
+        }
+
+
+        File selectedDatabase = null;
+
+
+        // Find selected database
+        for (File f : databases) {
+
+            if (f.getName().equals(selected)) {
+
+                selectedDatabase = f;
+                break;
+            }
+        }
+
+
+        if (selectedDatabase == null) {
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Database not found!",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+
+            return;
+        }
+
+
+        // =========================
+        // CONFIRMATION
+        // =========================
+
+        int choice =
+                JOptionPane.showConfirmDialog(
+                        this,
+                        "Are you sure you want to delete:\n\n"
+                                + selectedDatabase.getName()
+                                + "\n\nThis action cannot be undone.",
+                        "Confirm Database Deletion",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE
+                );
+
+
+        if (choice != JOptionPane.YES_OPTION) {
+
+            return;
+        }
+
+
+        // =========================
+        // DELETE
+        // =========================
+
+        if (selectedDatabase.delete()) {
+
+            // If the deleted database was
+            // currently loaded
+            if (
+                    database != null
+                            && database.equals(selectedDatabase)
+            ) {
+
+                database = null;
+                student.clear();
+            }
+
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Database deleted successfully!",
+                    "Success",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+
+        } else {
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Failed to delete the database!",
                     "Error",
                     JOptionPane.ERROR_MESSAGE
             );
@@ -335,29 +613,36 @@ public class SGMS_V3 extends JFrame {
             return;
         }
 
+
         try {
 
             BufferedWriter b =
-                    new BufferedWriter(new FileWriter(database));
+                    new BufferedWriter(
+                            new FileWriter(database)
+                    );
+
 
             for (Student s : student) {
 
                 b.write(
-                        s.ID + "," +
-                        s.name + "," +
-                        s.marks
+                        s.ID + ","
+                                + s.name + ","
+                                + s.marks
                 );
 
                 b.newLine();
             }
 
+
             b.close();
+
 
         } catch (IOException e) {
 
             JOptionPane.showMessageDialog(
                     this,
-                    "Error saving database:\n" + e.getMessage(),
+                    "Error saving database:\n"
+                            + e.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE
             );
@@ -371,395 +656,510 @@ public class SGMS_V3 extends JFrame {
 
     void showOperations() {
 
-    getContentPane().removeAll();
+        getContentPane().removeAll();
 
-    JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
 
-    mainPanel.setBorder(
-            BorderFactory.createEmptyBorder(
-                    15, 15, 15, 15
-            )
-    );
-
-
-    // =========================
-    // TOP
-    // =========================
-
-    JPanel topPanel = new JPanel(new BorderLayout());
-
-    JLabel title = new JLabel(
-            "Student Grade Management System"
-    );
-
-    title.setFont(titleFont);
-
-    databaseLabel = new JLabel(
-            "Database: " + database.getName()
-    );
-
-    databaseLabel.setFont(normalFont);
-
-    topPanel.add(title, BorderLayout.NORTH);
-    topPanel.add(databaseLabel, BorderLayout.SOUTH);
-
-    mainPanel.add(topPanel, BorderLayout.NORTH);
-
-
-    // =========================
-    // TABLE
-    // =========================
-
-    String[] columns = {
-            "No.",
-            "ID",
-            "Name",
-            "Marks",
-            "Grade"
-    };
-
-    tableModel = new DefaultTableModel(columns, 0) {
-
-        @Override
-        public boolean isCellEditable(
-                int row,
-                int column
-        ) {
-            return false;
-        }
-    };
-
-    table = new JTable(tableModel);
-
-    table.setRowHeight(25);
-    table.setFont(normalFont);
-    table.getTableHeader().setFont(buttonFont);
-
-    JScrollPane scrollPane =
-            new JScrollPane(table);
-
-    mainPanel.add(
-            scrollPane,
-            BorderLayout.CENTER
-    );
-
-
-    // =========================
-    // BUTTON PANEL
-    // =========================
-
-    JPanel buttonPanel =
-            new JPanel(
-                    new GridLayout(2, 3, 10, 10)
-            );
-
-
-    JButton addButton =
-            new JButton("Add Student");
-
-    JButton removeButton =
-            new JButton("Remove Student");
-
-    JButton updateButton =
-            new JButton("Update Marks");
-
-    JButton statisticsButton =
-            new JButton("Statistics");
-
-    JButton refreshButton =
-            new JButton("Refresh");
-
-    JButton returnButton =
-            new JButton("Main Menu");
-
-
-    JButton[] buttons = {
-            addButton,
-            removeButton,
-            updateButton,
-            statisticsButton,
-            refreshButton,
-            returnButton
-    };
-
-
-    for (JButton b : buttons) {
-        b.setFont(buttonFont);
-        buttonPanel.add(b);
-    }
-
-
-    mainPanel.add(
-            buttonPanel,
-            BorderLayout.SOUTH
-    );
-
-
-    // =========================
-    // ACTIONS
-    // =========================
-
-    addButton.addActionListener(
-            e -> addStudentGUI()
-    );
-
-    removeButton.addActionListener(
-            e -> removeStudentGUI()
-    );
-
-    updateButton.addActionListener(
-            e -> updateStudentGUI()
-    );
-
-    statisticsButton.addActionListener(
-            e -> showStatisticsGUI()
-    );
-
-    refreshButton.addActionListener(
-            e -> refreshTable()
-    );
-
-    returnButton.addActionListener(
-            e -> {
-
-                int choice =
-                        JOptionPane.showConfirmDialog(
-                                this,
-                                "Return to main menu?",
-                                "Confirm",
-                                JOptionPane.YES_NO_OPTION
-                        );
-
-                if (choice ==
-                        JOptionPane.YES_OPTION) {
-
-                    showMainMenu();
-                }
-            }
-    );
-
-
-    add(mainPanel);
-
-    refreshTable();
-
-    revalidate();
-    repaint();
-}
-
-
-    //  =========================================================
-    // ADD STUDENT
-    //  =========================================================
-void addStudentGUI() {
-
-    JPanel panel = new JPanel(
-            new GridLayout(3, 2, 10, 10)
-    );
-
-    JTextField id =
-            new JTextField();
-
-    JTextField name =
-            new JTextField();
-
-    JTextField marks =
-            new JTextField();
-
-    panel.add(new JLabel("Student ID:"));
-    panel.add(id);
-
-    panel.add(new JLabel("Student Name:"));
-    panel.add(name);
-
-    panel.add(new JLabel("Marks (%):"));
-    panel.add(marks);
-
-
-    while (true) {
-
-        int result = JOptionPane.showConfirmDialog(
-                this,
-                panel,
-                "Add Student",
-                JOptionPane.OK_CANCEL_OPTION,
-                JOptionPane.PLAIN_MESSAGE
-        );
-
-
-        // User pressed Cancel
-        if (result != JOptionPane.OK_OPTION) {
-            return;
-        }
-
-
-        // =========================================
-        // VALIDATE ID
-        // =========================================
-
-        int studentID;
-
-        try {
-
-            studentID =
-                    Integer.parseInt(
-                            id.getText().trim()
-                    );
-
-        } catch (NumberFormatException e) {
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Invalid ID!\nPlease enter a valid number.",
-                    "Invalid Input",
-                    JOptionPane.ERROR_MESSAGE
-            );
-
-            continue;
-        }
-
-
-        if (studentID <= 0) {
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Invalid ID!\nID must be greater than 0.",
-                    "Invalid Input",
-                    JOptionPane.ERROR_MESSAGE
-            );
-
-            continue;
-        }
-
-
-        // =========================================
-        // CHECK DUPLICATE ID
-        // =========================================
-
-        boolean duplicate = false;
-
-        for (Student s : student) {
-
-            if (s.ID == studentID) {
-
-                duplicate = true;
-                break;
-            }
-        }
-
-
-        if (duplicate) {
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Student ID already exists!\nPlease enter another ID.",
-                    "Duplicate ID",
-                    JOptionPane.ERROR_MESSAGE
-            );
-
-            continue;
-        }
-
-
-        // =========================================
-        // VALIDATE NAME
-        // =========================================
-
-        String studentName =
-                name.getText().trim();
-
-
-        if (
-                studentName.isEmpty() ||
-                !studentName.matches("[a-zA-Z ]+")
-        ) {
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Invalid name!\nUse alphabets only.",
-                    "Invalid Input",
-                    JOptionPane.ERROR_MESSAGE
-            );
-
-            continue;
-        }
-
-
-        // =========================================
-        // VALIDATE MARKS
-        // =========================================
-
-        double studentMarks;
-
-        try {
-
-            studentMarks =
-                    Double.parseDouble(
-                            marks.getText().trim()
-                    );
-
-        } catch (NumberFormatException e) {
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Invalid marks!\nPlease enter a valid number.",
-                    "Invalid Input",
-                    JOptionPane.ERROR_MESSAGE
-            );
-
-            continue;
-        }
-
-
-        if (
-                studentMarks < 0 ||
-                studentMarks > 100
-        ) {
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Invalid marks!\nMarks must be between 0 and 100.",
-                    "Invalid Input",
-                    JOptionPane.ERROR_MESSAGE
-            );
-
-            continue;
-        }
-
-
-        // =========================================
-        // ADD STUDENT
-        // =========================================
-
-        Student s =
-                new Student(
-                        studentID,
-                        studentName,
-                        studentMarks
+        JPanel mainPanel =
+                new JPanel(
+                        new BorderLayout(10, 10)
                 );
 
 
-        student.add(s);
+        mainPanel.setBorder(
+                BorderFactory.createEmptyBorder(
+                        15, 15, 15, 15
+                )
+        );
 
-        sort(student);
 
-        saveDatabase();
+        // =========================
+        // TOP
+        // =========================
+
+        JPanel topPanel =
+                new JPanel(
+                        new BorderLayout()
+                );
+
+
+        JLabel title =
+                new JLabel(
+                        "Student Grade Management System"
+                );
+
+
+        title.setFont(titleFont);
+
+
+        databaseLabel =
+                new JLabel(
+                        "Database: "
+                                + database.getName()
+                );
+
+
+        databaseLabel.setFont(normalFont);
+
+
+        topPanel.add(
+                title,
+                BorderLayout.NORTH
+        );
+
+        topPanel.add(
+                databaseLabel,
+                BorderLayout.SOUTH
+        );
+
+
+        mainPanel.add(
+                topPanel,
+                BorderLayout.NORTH
+        );
+
+
+        // =========================
+        // TABLE
+        // =========================
+
+        String[] columns = {
+                "No.",
+                "ID",
+                "Name",
+                "Marks",
+                "Grade"
+        };
+
+
+        tableModel =
+                new DefaultTableModel(
+                        columns,
+                        0
+                ) {
+
+                    @Override
+                    public boolean isCellEditable(
+                            int row,
+                            int column
+                    ) {
+
+                        return false;
+                    }
+                };
+
+
+        table =
+                new JTable(tableModel);
+
+
+        table.setRowHeight(25);
+        table.setFont(normalFont);
+
+
+        table.getTableHeader()
+                .setFont(buttonFont);
+
+
+        JScrollPane scrollPane =
+                new JScrollPane(table);
+
+
+        mainPanel.add(
+                scrollPane,
+                BorderLayout.CENTER
+        );
+
+
+        // =========================
+        // BUTTON PANEL
+        // =========================
+
+        JPanel buttonPanel =
+                new JPanel(
+                        new GridLayout(
+                                2,
+                                3,
+                                10,
+                                10
+                        )
+                );
+
+
+        JButton addButton =
+                new JButton(
+                        "Add Student"
+                );
+
+
+        JButton removeButton =
+                new JButton(
+                        "Remove Student"
+                );
+
+
+        JButton updateButton =
+                new JButton(
+                        "Update Marks"
+                );
+
+
+        JButton statisticsButton =
+                new JButton(
+                        "Statistics"
+                );
+
+
+        JButton refreshButton =
+                new JButton(
+                        "Refresh"
+                );
+
+
+        JButton returnButton =
+                new JButton(
+                        "Main Menu"
+                );
+
+
+        JButton[] buttons = {
+                addButton,
+                removeButton,
+                updateButton,
+                statisticsButton,
+                refreshButton,
+                returnButton
+        };
+
+
+        for (JButton b : buttons) {
+
+            b.setFont(buttonFont);
+            buttonPanel.add(b);
+        }
+
+
+        mainPanel.add(
+                buttonPanel,
+                BorderLayout.SOUTH
+        );
+
+
+        // =========================
+        // ACTIONS
+        // =========================
+
+        addButton.addActionListener(
+                e -> addStudentGUI()
+        );
+
+
+        removeButton.addActionListener(
+                e -> removeStudentGUI()
+        );
+
+
+        updateButton.addActionListener(
+                e -> updateStudentGUI()
+        );
+
+
+        statisticsButton.addActionListener(
+                e -> showStatisticsGUI()
+        );
+
+
+        refreshButton.addActionListener(
+                e -> refreshTable()
+        );
+
+
+        returnButton.addActionListener(
+                e -> {
+
+                    int choice =
+                            JOptionPane.showConfirmDialog(
+                                    this,
+                                    "Return to main menu?",
+                                    "Confirm",
+                                    JOptionPane.YES_NO_OPTION
+                            );
+
+
+                    if (
+                            choice
+                                    == JOptionPane.YES_OPTION
+                    ) {
+
+                        showMainMenu();
+                    }
+                }
+        );
+
+
+        add(mainPanel);
+
 
         refreshTable();
 
 
-        JOptionPane.showMessageDialog(
-                this,
-                "Student added successfully!",
-                "Success",
-                JOptionPane.INFORMATION_MESSAGE
+        revalidate();
+        repaint();
+    }
+
+
+    // =========================================================
+    // ADD STUDENT
+    // =========================================================
+
+    void addStudentGUI() {
+
+        JPanel panel =
+                new JPanel(
+                        new GridLayout(
+                                3,
+                                2,
+                                10,
+                                10
+                        )
+                );
+
+
+        JTextField id =
+                new JTextField();
+
+
+        JTextField name =
+                new JTextField();
+
+
+        JTextField marks =
+                new JTextField();
+
+
+        panel.add(
+                new JLabel("Student ID:")
         );
 
+        panel.add(id);
 
-        // Close dialog after successful addition
-        return;
+
+        panel.add(
+                new JLabel("Student Name:")
+        );
+
+        panel.add(name);
+
+
+        panel.add(
+                new JLabel("Marks (%):")
+        );
+
+        panel.add(marks);
+
+
+        while (true) {
+
+            int result =
+                    JOptionPane.showConfirmDialog(
+                            this,
+                            panel,
+                            "Add Student",
+                            JOptionPane.OK_CANCEL_OPTION,
+                            JOptionPane.PLAIN_MESSAGE
+                    );
+
+
+            // Cancel
+            if (
+                    result
+                            != JOptionPane.OK_OPTION
+            ) {
+
+                return;
+            }
+
+
+            // =========================
+            // VALIDATE ID
+            // =========================
+
+            int studentID;
+
+
+            try {
+
+                studentID =
+                        Integer.parseInt(
+                                id.getText().trim()
+                        );
+
+            } catch (NumberFormatException e) {
+
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Invalid ID!\n"
+                                + "Please enter a valid number.",
+                        "Invalid Input",
+                        JOptionPane.ERROR_MESSAGE
+                );
+
+                continue;
+            }
+
+
+            if (studentID <= 0) {
+
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Invalid ID!\n"
+                                + "ID must be greater than 0.",
+                        "Invalid Input",
+                        JOptionPane.ERROR_MESSAGE
+                );
+
+                continue;
+            }
+
+
+            // =========================
+            // CHECK DUPLICATE ID
+            // =========================
+
+            boolean duplicate = false;
+
+
+            for (Student s : student) {
+
+                if (s.ID == studentID) {
+
+                    duplicate = true;
+                    break;
+                }
+            }
+
+
+            if (duplicate) {
+
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Student ID already exists!\n"
+                                + "Please enter another ID.",
+                        "Duplicate ID",
+                        JOptionPane.ERROR_MESSAGE
+                );
+
+                continue;
+            }
+
+
+            // =========================
+            // VALIDATE NAME
+            // =========================
+
+            String studentName =
+                    name.getText().trim();
+
+
+            if (
+                    studentName.isEmpty()
+                            || !studentName.matches(
+                            "[a-zA-Z ]+"
+                    )
+            ) {
+
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Invalid name!\n"
+                                + "Use alphabets only.",
+                        "Invalid Input",
+                        JOptionPane.ERROR_MESSAGE
+                );
+
+                continue;
+            }
+
+
+            // =========================
+            // VALIDATE MARKS
+            // =========================
+
+            double studentMarks;
+
+
+            try {
+
+                studentMarks =
+                        Double.parseDouble(
+                                marks.getText().trim()
+                        );
+
+            } catch (NumberFormatException e) {
+
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Invalid marks!\n"
+                                + "Please enter a valid number.",
+                        "Invalid Input",
+                        JOptionPane.ERROR_MESSAGE
+                );
+
+                continue;
+            }
+
+
+            if (
+                    studentMarks < 0
+                            || studentMarks > 100
+            ) {
+
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Invalid marks!\n"
+                                + "Marks must be between 0 and 100.",
+                        "Invalid Input",
+                        JOptionPane.ERROR_MESSAGE
+                );
+
+                continue;
+            }
+
+
+            // =========================
+            // ADD STUDENT
+            // =========================
+
+            Student s =
+                    new Student(
+                            studentID,
+                            studentName,
+                            studentMarks
+                    );
+
+
+            student.add(s);
+
+
+            sort(student);
+
+
+            saveDatabase();
+
+
+            refreshTable();
+
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Student added successfully!",
+                    "Success",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+
+
+            return;
+        }
     }
-}
+
 
     // =========================================================
     // REMOVE STUDENT
@@ -798,9 +1198,11 @@ void addStudentGUI() {
             }
 
 
-            for (int i = 0;
-                 i < student.size();
-                 i++) {
+            for (
+                    int i = 0;
+                    i < student.size();
+                    i++
+            ) {
 
                 Student s =
                         student.get(i);
@@ -811,23 +1213,25 @@ void addStudentGUI() {
                     int choice =
                             JOptionPane.showConfirmDialog(
                                     this,
-                                    "Remove student:\n\n" +
-                                    "ID: " + s.ID +
-                                    "\nName: " + s.name +
-                                    "\nMarks: " + s.marks,
+                                    "Remove student:\n\n"
+                                            + "ID: " + s.ID
+                                            + "\nName: " + s.name
+                                            + "\nMarks: " + s.marks,
                                     "Confirm Removal",
                                     JOptionPane.YES_NO_OPTION
                             );
 
 
                     if (
-                            choice ==
-                            JOptionPane.YES_OPTION
+                            choice
+                                    == JOptionPane.YES_OPTION
                     ) {
 
                         student.remove(i);
 
+
                         saveDatabase();
+
 
                         refreshTable();
 
@@ -837,6 +1241,7 @@ void addStudentGUI() {
                                 "Student removed successfully!"
                         );
                     }
+
 
                     return;
                 }
@@ -890,11 +1295,13 @@ void addStudentGUI() {
                 if (s.ID == id) {
 
                     String message =
-                            "Student Found\n\n" +
-                            "ID : " + s.ID +
-                            "\nName : " + s.name +
-                            "\nMarks : " + s.marks + " %" +
-                            "\nGrade : " + s.getGrade();
+                            "Student Found\n\n"
+                                    + "ID : " + s.ID
+                                    + "\nName : " + s.name
+                                    + "\nMarks : " + s.marks
+                                    + " %"
+                                    + "\nGrade : "
+                                    + s.getGrade();
 
 
                     JOptionPane.showMessageDialog(
@@ -903,6 +1310,7 @@ void addStudentGUI() {
                             "Student Details",
                             JOptionPane.INFORMATION_MESSAGE
                     );
+
 
                     return;
                 }
@@ -958,10 +1366,11 @@ void addStudentGUI() {
                     String marksInput =
                             JOptionPane.showInputDialog(
                                     this,
-                                    "Student: " + s.name +
-                                    "\nCurrent Marks: " +
-                                    s.marks +
-                                    "\n\nEnter New Marks:"
+                                    "Student: "
+                                            + s.name
+                                            + "\nCurrent Marks: "
+                                            + s.marks
+                                            + "\n\nEnter New Marks:"
                             );
 
 
@@ -977,8 +1386,8 @@ void addStudentGUI() {
 
 
                     if (
-                            newMarks < 0 ||
-                            newMarks > 100
+                            newMarks < 0
+                                    || newMarks > 100
                     ) {
 
                         JOptionPane.showMessageDialog(
@@ -995,6 +1404,7 @@ void addStudentGUI() {
 
                     saveDatabase();
 
+
                     refreshTable();
 
 
@@ -1002,6 +1412,7 @@ void addStudentGUI() {
                             this,
                             "Marks updated successfully!"
                     );
+
 
                     return;
                 }
@@ -1038,9 +1449,11 @@ void addStudentGUI() {
         tableModel.setRowCount(0);
 
 
-        for (int i = 0;
-             i < student.size();
-             i++) {
+        for (
+                int i = 0;
+                i < student.size();
+                i++
+        ) {
 
             Student s =
                     student.get(i);
@@ -1072,7 +1485,9 @@ void addStudentGUI() {
     // SORT STUDENTS
     // =========================================================
 
-    void sort(ArrayList<Student> student) {
+    void sort(
+            ArrayList<Student> student
+    ) {
 
         student.sort(
                 Comparator.comparingInt(
@@ -1117,8 +1532,11 @@ void addStudentGUI() {
         for (Student s : student) {
 
             if (s.marks >= 60) {
+
                 passed++;
+
             } else {
+
                 failed++;
             }
 
@@ -1142,31 +1560,31 @@ void addStudentGUI() {
 
 
         String message =
-                "CLASS STATISTICS\n\n" +
+                "CLASS STATISTICS\n\n"
 
-                "Total Students : " +
-                total +
+                        + "Total Students : "
+                        + total
 
-                "\nPassed Students : " +
-                passed +
+                        + "\nPassed Students : "
+                        + passed
 
-                "\nFailed Students : " +
-                failed +
+                        + "\nFailed Students : "
+                        + failed
 
-                "\nAverage Marks : " +
-                String.format(
+                        + "\nAverage Marks : "
+                        + String.format(
                         "%.2f",
                         average
-                ) +
+                )
 
-                "\nHighest Marks : " +
-                String.format(
+                        + "\nHighest Marks : "
+                        + String.format(
                         "%.2f",
                         highest
-                ) +
+                )
 
-                "\nLowest Marks : " +
-                String.format(
+                        + "\nLowest Marks : "
+                        + String.format(
                         "%.2f",
                         lowest
                 );
@@ -1185,13 +1603,15 @@ void addStudentGUI() {
     // MAIN
     // =========================================================
 
-    public static void main(String[] args) {
+    public static void main(
+            String[] args
+    ) {
 
         SwingUtilities.invokeLater(
                 () -> {
 
-                    SGMS_V3 gui =
-                            new SGMS_V3();
+                    SGMS_V3_1 gui =
+                            new SGMS_V3_1();
 
                     gui.setVisible(true);
                 }
