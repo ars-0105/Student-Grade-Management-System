@@ -34,7 +34,7 @@ class Student {
 }
 
 
-public class SGMS_V3_1 extends JFrame {
+public class SGMS_V3 extends JFrame {
 
     // =========================
     // DATA
@@ -67,7 +67,7 @@ public class SGMS_V3_1 extends JFrame {
     // CONSTRUCTOR
     // =========================
 
-    public SGMS_V3_1() {
+    public SGMS_V3() {
 
         setTitle("Student Grade Management System");
         setSize(950, 600);
@@ -1610,8 +1610,8 @@ public class SGMS_V3_1 extends JFrame {
         SwingUtilities.invokeLater(
                 () -> {
 
-                    SGMS_V3_1 gui =
-                            new SGMS_V3_1();
+                    SGMS_V3 gui =
+                            new SGMS_V3();
 
                     gui.setVisible(true);
                 }
