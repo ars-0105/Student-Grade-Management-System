@@ -33,12 +33,11 @@ class Student{
     else{
         return "F ( FAIL )";
     }
- }
+}
     
 }
-
 public class SGMS_V2 {
-                                                              // MAIN_MENU
+                                                             // MAIN_MENU
 
     //Function to create a new database
 
@@ -109,6 +108,58 @@ public class SGMS_V2 {
         b.close();
         System.out.println("\nDatabase Loaded Succesfully.\n");
         return d;
+    }
+
+    // Function to Delete a Existing Database
+    static void delete(Scanner sc)throws IOException{
+        File directory= new File(".");
+        File[] files=directory.listFiles();
+        System.out.println("\nAvailable Databases: ");
+        int c=0;
+        for(File f: files){
+            if(f.isFile() && f.getName().endsWith(".txt")){
+                c++;
+                System.out.println(c+". "+f.getName());
+            }
+        }
+        if(c==0){
+            System.out.println("No Databases Found!");
+            return;
+        }
+        File d=null;
+        while(true){
+            System.out.print("\nSelect Database no. : ");
+            int a=sc.nextInt();
+            if(a<1 || a>c){
+                System.out.println("\nInvalid DB no.! Please select from the list.");
+            }else{
+                int b=0;
+                for(File f:files){
+                    if(f.isFile() && f.getName().endsWith(".txt")){
+                        b++;
+                        if(b==a){
+                            d=f;
+                            break;
+                        }
+                    }
+                }
+                break;
+            }
+        }
+        System.out.println("\nAre you sure you want to delete "+ d.getName());
+        System.out.println("1. Yes");
+        System.out.println("2. No");
+        System.out.print("\nEnter confirmation: ");
+        int i= sc.nextInt();
+        if(i==1){
+            if(d.delete()){
+                System.out.println("Database Deleted Successfully.");
+            }else{
+                System.out.println("Failed to delete the database.");
+            }
+        }else{
+            return;
+        }
     }
     
     // Function to save all the updation 
@@ -391,8 +442,9 @@ public class SGMS_V2 {
             System.out.println("\n===== Student Grade Management System =====");
             System.out.println("");
             System.out.println("1.Create New Databse");
-            System.out.println("2.Load Existing Database");           
-            System.out.println("3.Exit\n");           
+            System.out.println("2.Load Existing Database");
+            System.out.println("3.Delete Existing Database");                       
+            System.out.println("4.Exit\n");           
             int c;               
             while(true){
                 try{
@@ -460,7 +512,9 @@ public class SGMS_V2 {
                 
             }    
             break;
-            case 3 : System.out.println("Exiting......");
+            case 3: delete(sc);
+            break;
+            case 4 : System.out.println("Exiting......");
             sc.close();
             return;
             default: System.out.print("\nPlease enter a valid choice\n");
