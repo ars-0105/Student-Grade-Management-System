@@ -1,6 +1,6 @@
 # 🎓 Student Grade Management System
 
-A **Java-based Student Grade Management System** developed as a learning project to practice and improve Java programming, Object-Oriented Programming, Collections, File Handling, Exception Handling, and GUI development.
+A **Java-based Student Grade Management System** developed as a learning project to practice and improve Java programming, Object-Oriented Programming, Collections, File Handling, Exception Handling, Data Persistence, and GUI development.
 
 This repository contains **three versions** of the project, with each version introducing new features and improvements over the previous one.
 
@@ -30,7 +30,7 @@ File Handling + Database + Validation + Statistics
    ↓
 Version 3
    ↓
-Java Swing GUI + Improved User Experience
+Java Swing GUI + Database Management + Improved User Experience
 ```
 
 ---
@@ -41,7 +41,7 @@ Java Swing GUI + Improved User Experience
 
 **Version 1** is the initial version of the Student Grade Management System.
 
-It focuses on implementing the basic student management functionality using a console-based menu.
+It focuses on implementing basic student management functionality using a console-based menu.
 
 ### ✨ Main Features
 
@@ -79,6 +79,7 @@ Student records can now be saved and loaded, allowing data to remain available e
 
 * 🗄️ Create New Database
 * 📂 Load Existing Database
+* 🗑️ Delete Existing Database
 * ➕ Add Student
 * 🗑️ Remove Student
 * 🔍 Search Student
@@ -113,24 +114,93 @@ Student records can now be saved and loaded, allowing data to remain available e
 
 **Version 3** converts the previous console-based system into a **graphical desktop application using Java Swing**.
 
-It keeps the file handling and data persistence introduced in Version 2 while providing a more user-friendly graphical interface.
+It keeps the file handling, database management, validation, sorting, and data persistence introduced in Version 2 while providing a more user-friendly graphical interface.
 
 ### ✨ Main Features
 
 * 🖥️ Java Swing GUI
 * 🗄️ Create New Database
 * 📂 Load Existing Database
+* 🗑️ Delete Existing Database
 * ➕ Add Student
 * 🗑️ Remove Student with Confirmation
 * ✏️ Update Marks
 * 📋 Student Records displayed using `JTable`
 * 📊 Class Statistics
-* 🔤 Automatic Sorting
+* 🔤 Automatic Sorting by Student ID
 * 🔄 Refresh Student Table
 * 💾 File Handling & Data Persistence
 * 🛡️ Input Validation
 * ⚠️ Exception Handling
-* 💬 GUI error messages and dialogs
+* 💬 GUI error messages, dialogs, and confirmations
+
+### 🗑️ Delete Existing Database
+
+Version 3 includes a dedicated **Delete Existing Database** feature in the main menu.
+
+The user can:
+
+1. Open **Delete Existing Database**
+2. Select an existing `.txt` database from a GUI list
+3. Confirm the deletion
+4. Permanently delete the selected database
+
+A confirmation dialog is displayed before deletion because the action **cannot be undone**.
+
+If the deleted database is currently loaded, Version 3 also clears the active database reference and student data.
+
+### ➕ Add Student
+
+The GUI validates:
+
+* Student ID must be a valid positive number.
+* Duplicate Student IDs are not allowed.
+* Student names can contain alphabets and spaces only.
+* Marks must be between `0` and `100`.
+* Invalid numeric input is handled using `NumberFormatException`.
+* The Add Student dialog remains open after invalid input, allowing the user to correct the entered information.
+* Successfully added students are automatically sorted and saved.
+
+### 🗑️ Remove Student
+
+* Removes a student using Student ID.
+* Displays the student's details before removal.
+* Asks for confirmation before deletion.
+* Automatically saves the updated database.
+* Refreshes the table after successful removal.
+
+### ✏️ Update Marks
+
+* Updates marks using Student ID.
+* Validates marks between `0` and `100`.
+* Automatically changes the student's grade based on the new marks.
+* Automatically saves the updated database.
+* Refreshes the table after the update.
+
+### 📋 Student Table
+
+Loaded students are displayed directly inside a `JTable`.
+
+The table contains:
+
+* No.
+* ID
+* Name
+* Marks
+* Grade
+
+Students are automatically sorted in ascending order by Student ID.
+
+### 📊 Class Statistics
+
+Version 3 displays:
+
+* Total Students
+* Passed Students
+* Failed Students
+* Average Marks
+* Highest Marks
+* Lowest Marks
 
 ### 🖥️ Main Swing Components
 
@@ -153,48 +223,52 @@ It keeps the file handling and data persistence introduced in Version 2 while pr
 * File Handling
 * Exception Handling
 * Data Persistence
+* Sorting with `Comparator`
 * Object-Oriented Programming
 
-📖 **For complete features, GUI details, examples, and instructions, see the README inside the Version 3 folder.**
+📖 **For complete features, GUI details, examples, project structure, and instructions, see the README inside the Version 3 folder.**
 
 ---
 
 # 📊 Version Comparison
 
-| Feature                    | Version 1 | Version 2 | Version 3 |
-| -------------------------- | :-------: | :-------: | :-------: |
-| Add Student                |     ✅     |     ✅     |     ✅     |
-| Remove Student             |     ✅     |     ✅     |     ✅     |
-| Update Marks               |     ✅     |     ✅     |     ✅     |
-| View Students              |     ✅     |     ✅     |     ✅     |
-| Search Student             |     ❌     |     ✅     |     —     |
-| Automatic Grade Assignment |     ✅     |     ✅     |     ✅     |
-| Automatic Sorting          |     ✅     |     ✅     |     ✅     |
-| Class Statistics           |     ❌     |     ✅     |     ✅     |
-| Input Validation           |   Basic   |     ✅     |     ✅     |
-| Exception Handling         |     ❌     |     ✅     |     ✅     |
-| File Handling              |     ❌     |     ✅     |     ✅     |
-| Data Persistence           |     ❌     |     ✅     |     ✅     |
-| Database Creation          |     ❌     |     ✅     |     ✅     |
-| Java Swing GUI             |     ❌     |     ❌     |     ✅     |
-| `JTable`                   |     ❌     |     ❌     |     ✅     |
-| GUI Dialogs                |     ❌     |     ❌     |     ✅     |
-| Refresh Functionality      |     ❌     |     ❌     |     ✅     |
+| Feature | Version 1 | Version 2 | Version 3 |
+| --- | :---: | :---: | :---: |
+| Add Student | ✅ | ✅ | ✅ |
+| Remove Student | ✅ | ✅ | ✅ |
+| Update Marks | ✅ | ✅ | ✅ |
+| View Students | ✅ | ✅ | ✅ |
+| Search Student | ❌ | ✅ | ⚪ |
+| Automatic Grade Assignment | ✅ | ✅ | ✅ |
+| Automatic Sorting | ✅ | ✅ | ✅ |
+| Class Statistics | ❌ | ✅ | ✅ |
+| Input Validation | Basic | ✅ | ✅ |
+| Exception Handling | ❌ | ✅ | ✅ |
+| File Handling | ❌ | ✅ | ✅ |
+| Data Persistence | ❌ | ✅ | ✅ |
+| Database Creation | ❌ | ✅ | ✅ |
+| Load Existing Database | ❌ | ✅ | ✅ |
+| Delete Existing Database | ❌ | ✅ | ✅ |
+| Java Swing GUI | ❌ | ❌ | ✅ |
+| `JTable` | ❌ | ❌ | ✅ |
+| GUI Dialogs | ❌ | ❌ | ✅ |
+| Refresh Functionality | ❌ | ❌ | ✅ |
+| Delete Confirmation | ❌ | Console | GUI |
 
-> **Note:** Some features from Version 2, such as separate Search and View options, were redesigned in Version 3 because student records are displayed directly in the GUI table.
+> **Note:** Version 3 does not provide a separate Search Student button because all loaded students are already displayed in the `JTable`. A search method exists in the V3 source code, but it is not connected to the operations interface.
 
 ---
 
 # 🎓 Automatic Grade Assignment
 
-All versions use the same basic grade assignment system:
+All versions use the same grade assignment system:
 
-| Marks    | Grade    |
-| -------- | -------- |
-| 90–100   | A (PASS) |
-| 80–89    | B (PASS) |
-| 70–79    | C (PASS) |
-| 60–69    | D (PASS) |
+| Marks | Grade |
+| --- | --- |
+| 90–100 | A (PASS) |
+| 80–89 | B (PASS) |
+| 70–79 | C (PASS) |
+| 60–69 | D (PASS) |
 | Below 60 | F (FAIL) |
 
 ---
@@ -217,9 +291,13 @@ Example:
 103,Rohit,55.0
 ```
 
-When a database is loaded, the records are converted into `Student` objects and stored in an `ArrayList<Student>`.
+When a database is loaded, the records are converted into `Student` objects and stored in an:
 
-Changes made to the student records are then saved back to the database file.
+```java
+ArrayList<Student>
+```
+
+Whenever a student is added, removed, or updated, the modified records are written back to the active database file.
 
 ---
 
@@ -234,13 +312,25 @@ The project progressively uses:
 * **Comparator**
 * **Lambda Expressions**
 * **Exception Handling**
+* **NumberFormatException**
 * **File Handling**
+* **File**
+* **FileReader**
+* **FileWriter**
 * **BufferedReader**
 * **BufferedWriter**
 * **Java Swing**
+* **JFrame**
+* **JPanel**
+* **JButton**
+* **JLabel**
+* **JTextField**
 * **JTable**
+* **JScrollPane**
 * **JOptionPane**
 * **DefaultTableModel**
+* **ActionListener**
+* **GUI Event Handling**
 
 ---
 
@@ -266,6 +356,8 @@ Student-Grade-Management-System/
 └── README.md
 ```
 
+Database `.txt` files are created in the working directory when using Version 2 or Version 3.
+
 > **Note:** The exact folder and file names may vary depending on the repository structure.
 
 ---
@@ -274,28 +366,77 @@ Student-Grade-Management-System/
 
 Each version can be compiled and run separately.
 
-### Version 1
+## Requirements
+
+Make sure the **Java JDK** is installed on your system.
+
+You can verify Java installation using:
+
+```bash
+java -version
+```
+
+and:
+
+```bash
+javac -version
+```
+
+Both commands should work from your terminal or command prompt.
+
+---
+
+## Version 1
+
+Navigate to the Version 1 folder and compile:
 
 ```bash
 javac SGMS.java
+```
+
+Run:
+
+```bash
 java SGMS
 ```
 
-### Version 2
+---
+
+## Version 2
+
+Navigate to the Version 2 folder and compile:
 
 ```bash
 javac SGMS_V2.java
+```
+
+Run:
+
+```bash
 java SGMS_V2
 ```
 
-### Version 3
+Version 2 runs as a console application.
+
+---
+
+## Version 3
+
+Navigate to the Version 3 folder and compile:
 
 ```bash
 javac SGMS_V3.java
+```
+
+Run:
+
+```bash
 java SGMS_V3
 ```
 
-Make sure the **Java JDK** is installed and `java` and `javac` are available in your system PATH.
+The **Student Grade Management System GUI** will open.
+
+Version 3 uses Java Swing, which is included with the standard Java SE JDK.
 
 ---
 
@@ -311,15 +452,15 @@ Focused on learning the fundamentals:
 
 ### Version 2
 
-Introduced more practical application concepts:
+Introduced practical application concepts:
 
-**File Handling → Data Persistence → Validation → Exception Handling → Statistics**
+**File Handling → Data Persistence → Database Management → Validation → Exception Handling → Statistics**
 
 ### Version 3
 
 Focused on application usability and GUI development:
 
-**Java Swing → GUI → Event Handling → Tables → Dialogs → Improved User Experience**
+**Java Swing → GUI → Event Handling → Tables → Dialogs → Database Management → Improved User Experience**
 
 ---
 
@@ -330,7 +471,7 @@ Through the three versions, this project provided practice with:
 * Classes and Objects
 * Constructors
 * Methods
-* Encapsulation
+* Object-Oriented Programming
 * Conditional Statements
 * Loops
 * Collections
@@ -340,20 +481,36 @@ Through the three versions, this project provided practice with:
 * Updating and Removing Objects
 * Lambda Expressions
 * Exception Handling
+* `InputMismatchException`
+* `NumberFormatException`
 * File Handling
+* `File`
+* `FileReader`
+* `FileWriter`
+* `BufferedReader`
+* `BufferedWriter`
 * Reading and Writing Files
 * Data Persistence
+* Database Management using `.txt` files
 * Java Swing
 * GUI Event Handling
 * `ActionListener`
 * Tables and Dialogs
-* Object-Oriented Programming
+* `JFrame`
+* `JPanel`
+* `JButton`
+* `JLabel`
+* `JTextField`
+* `JTable`
+* `JScrollPane`
+* `JOptionPane`
+* `DefaultTableModel`
 
 ---
 
 # 📖 Detailed Documentation
 
-Each version has its **own README file** containing detailed information about that particular version, including its features, examples, project structure, implementation details, and how to run it.
+Each version has its **own README file** containing detailed information about that particular version, including its features, examples, project structure, implementation details, database format, and how to run it.
 
 If you want to understand a specific version in detail, **open the README file inside that version's folder.**
 
@@ -366,6 +523,8 @@ If you want to understand a specific version in detail, **open the README file i
 This project was created as part of my journey to learn and practice:
 
 **Java Programming • Object-Oriented Programming • Collections • Exception Handling • File Handling • Data Persistence • Java Swing**
+
+The project represents the progression from a simple console-based Java program to a graphical desktop application with database management and persistent student records.
 
 ---
 
