@@ -1,8 +1,8 @@
 # 🎓 Student Grade Management System – V2
 
-A simple **Java-based Student Grade Management System** that allows users to create and load student databases, add, remove, search, view, and update student records, as well as display class statistics through a console-based menu.
+A simple **Java-based Student Grade Management System** that allows users to create, load, delete, and manage student databases through a console-based menu.
 
-This is the **Version 2** of my Student Grade Management System. The project builds upon the first version by adding **input validation, exception handling, student search, class statistics, and file handling/data persistence**.
+This is **Version 2** of my Student Grade Management System. The project builds upon the first version by adding **database creation, database loading, database deletion, input validation, exception handling, student search, class statistics, and file handling/data persistence**.
 
 The project is built using **Java**, `ArrayList`, `Scanner`, `Comparator`, `BufferedReader`, `BufferedWriter`, and Java File Handling concepts.
 
@@ -11,39 +11,58 @@ The project is built using **Java**, `ArrayList`, `Scanner`, `Comparator`, `Buff
 ## ✨ Features
 
 * 🗄️ **Create New Database**
+
   * Allows the user to create a new student database.
   * Database files are stored as `.txt` files.
   * Prevents creating a database with a name that already exists.
 
 * 📂 **Load Existing Database**
+
   * Displays all available `.txt` databases.
   * Allows the user to select a database from the list.
-  * Loads all student records from the selected file into an `ArrayList`.
+  * Loads student records from the selected database into an `ArrayList<Student>`.
+
+* 🗑️ **Delete Existing Database**
+
+  * Displays all available `.txt` databases.
+  * Allows the user to select a database from the list.
+  * Asks for confirmation before deleting the database.
+  * Permanently deletes the selected `.txt` database file.
+  * Displays a success or failure message after the deletion attempt.
 
 * ➕ **Add Student**
+
   * Add a student using their ID, name, and marks.
   * Prevents duplicate student IDs.
-  * Validates student name and marks.
+  * Validates student IDs.
+  * Validates student names.
+  * Validates marks between `0` and `100`.
+  * Automatically saves the updated student data to the database.
 
 * 🗑️ **Remove Student**
-  * Remove a student by entering their unique Student ID.
+
+  * Remove a student using their unique Student ID.
   * Displays the student's details before removing them.
   * Automatically saves the updated database.
 
 * 🔍 **Search Student**
+
   * Search for a student using their Student ID.
   * Displays the student's ID, name, marks, and grade.
 
 * 👀 **View All Students**
+
   * Displays all registered students in a formatted table.
   * Shows Student ID, Name, Marks, and Grade.
 
 * ✏️ **Update Marks**
+
   * Update the marks of an existing student using their Student ID.
   * The student's grade is automatically updated based on the new marks.
   * Automatically saves the updated database.
 
 * 📊 **Class Statistics**
+
   * Displays the total number of students.
   * Displays the number of passed and failed students.
   * Calculates the average marks.
@@ -51,24 +70,30 @@ The project is built using **Java**, `ArrayList`, `Scanner`, `Comparator`, `Buff
   * Displays the lowest marks.
 
 * 🔤 **Automatic Sorting**
+
   * Students are sorted in ascending order according to their Student ID.
 
 * 💾 **File Handling / Data Persistence**
+
   * Student records are stored inside `.txt` database files.
   * Data is loaded from the file when a database is opened.
-  * Changes are automatically written back to the database after adding, removing, or updating students.
+  * Changes are written back to the database after adding, removing, or updating students.
   * Student data remains available even after closing the program.
 
 * 🛡️ **Input Validation**
+
   * Validates Student IDs.
   * Prevents duplicate Student IDs.
-  * Validates student names.
+  * Validates student names using alphabets and spaces.
   * Validates marks between `0` and `100`.
   * Validates menu choices.
+  * Prevents invalid or negative Student IDs.
 
 * ⚠️ **Exception Handling**
+
   * Uses `InputMismatchException` to handle invalid user input.
   * Prevents the program from crashing when incorrect data types are entered.
+  * Allows the user to enter valid input again after an invalid input.
 
 ---
 
@@ -95,8 +120,12 @@ Grades are assigned according to the student's marks:
 * **Lambda Expressions**
 * **BufferedReader**
 * **BufferedWriter**
+* **File**
+* **FileReader**
+* **FileWriter**
 * **File Handling**
 * **Exception Handling**
+* **InputMismatchException**
 * **Object-Oriented Programming (OOP)**
 
 ---
@@ -106,7 +135,7 @@ Grades are assigned according to the student's marks:
 ```text
 Student-Grade-Management-System/
 │
-├── SGMS_V2.java
+├── SGMS_V2_1.java
 ├── Database files (.txt)
 └── README.md
 ```
@@ -130,13 +159,13 @@ cd Student-Grade-Management-System
 ### 3. Compile the Program
 
 ```bash
-javac SGMS_V2.java
+javac SGMS_V2_1.java
 ```
 
 ### 4. Run the Program
 
 ```bash
-java SGMS_V2
+java SGMS_V2_1
 ```
 
 ---
@@ -148,9 +177,10 @@ When the program starts, the following main menu is displayed:
 ```text
 ===== Student Grade Management System =====
 
-1.Create New Database
+1.Create New Databse
 2.Load Existing Database
-3.Exit
+3.Delete Existing Database
+4.Exit
 
 Enter choice:
 ```
@@ -172,7 +202,7 @@ Enter choice:
 
 ---
 
-## 📌 Example
+## 📌 Examples
 
 ### Creating a Database
 
@@ -180,7 +210,7 @@ Enter choice:
 Enter choice: 1
 Enter Database Name: ClassA
 
-Database created successfully.
+Database created succesfully.
 ```
 
 A file named:
@@ -205,8 +235,10 @@ Available Databases:
 
 Select Database no. : 1
 
-Database Loaded Successfully.
+Database Loaded Succesfully.
 ```
+
+The records from the selected database are loaded into the `ArrayList<Student>`.
 
 ---
 
@@ -221,7 +253,7 @@ Enter Student Marks (in %): 87
 Student Added Successfully!
 ```
 
-The information is then saved to the database file.
+The updated student information is automatically saved to the database file.
 
 ---
 
@@ -240,7 +272,7 @@ No.   ID         Name                           Marks      Grade
 ### Searching for a Student
 
 ```text
-Enter Student ID: 101
+Enter Student ID:101
 
 ========Student========
 ID : 101
@@ -248,6 +280,67 @@ Name : Rahul
 Marks : 87.0 %
 Grade : B ( PASS )
 ```
+
+---
+
+### Updating Student Marks
+
+```text
+Enter Student ID:101
+
+========Students=======
+No.   ID         Name                           Marks      Grade
+----------------------------------------------------------------------
+1     101        Rahul                          87.00      B ( PASS )
+
+Set new marks: 94
+Marks Updated Successfully!
+```
+
+The updated marks are automatically saved to the database.
+
+---
+
+### Removing a Student
+
+```text
+Enter Student ID:101
+
+========Students=======
+No.   ID         Name                           Marks      Grade
+----------------------------------------------------------------------
+1     101        Rahul                          87.00      B ( PASS )
+
+Student Removed Successfully!
+```
+
+The updated student list is automatically written back to the database.
+
+---
+
+### Deleting a Database
+
+The program allows an existing database to be permanently deleted.
+
+```text
+Enter choice: 3
+
+Available Databases:
+1. ClassA.txt
+2. ClassB.txt
+
+Select Database no. : 1
+
+Are you sure you want to delete ClassA.txt
+1. Yes
+2. No
+
+Enter confirmation: 1
+
+Database Deleted Successfully.
+```
+
+If the user selects `2`, the deletion is cancelled.
 
 ---
 
@@ -278,21 +371,23 @@ For example:
 103,Rohit,55.0
 ```
 
-When the database is loaded, each line is read and converted into a `Student` object, which is then stored inside the `ArrayList<Student>`.
+When the database is loaded, each line is read using `BufferedReader` and split into individual values.
 
-When a student is added, removed, or their marks are updated, the updated `ArrayList` is written back to the database file.
+The values are then used to create `Student` objects, which are stored inside:
+
+```java
+ArrayList<Student>
+```
+
+When a student is added, removed, or their marks are updated, the updated `ArrayList` is written back to the database using `BufferedWriter`.
+
+The database files can also be deleted directly through the **Delete Existing Database** option in the main menu.
 
 ---
 
 ## 🔄 Version 2 Upgrades
 
 The following upgrades were added in **Version 2** compared to the previous version:
-
-1. ✅ **Input Validation**
-2. ✅ **Search Student**
-3. ✅ **Class Statistics**
-4. ✅ **Exception Handling**
-5. ✅ **File Handling / Data Persistence**
 
 ### Version 1
 
@@ -311,12 +406,14 @@ Version 2 expands the project by adding:
 
 * Database creation
 * Existing database loading
+* Database deletion
 * File-based data persistence
 * Automatic saving of changes
 * Student search
 * Class statistics
 * Input validation
 * Exception handling
+* Invalid input handling
 
 ---
 
@@ -324,30 +421,92 @@ Version 2 expands the project by adding:
 
 This project helped me practice several important Java concepts:
 
-* Classes and Objects
-* Constructors
-* Methods
+### Core Java
+
+* Variables and Data Types
 * Conditional Statements
 * Loops
+* Methods
+* User Input using `Scanner`
+
+### Object-Oriented Programming
+
+* Classes and Objects
+* Constructors
+* Object Methods
+* Passing objects to methods
+* Working with object collections
+
+### Collections
+
 * `ArrayList`
+* Adding elements
+* Removing elements
+* Searching elements
+* Updating objects
+* Sorting collections
 * `Comparator`
 * Lambda Expressions
-* User Input using `Scanner`
-* Searching elements
-* Removing elements
-* Updating object data
-* Sorting collections
-* Exception Handling
+
+### Exception Handling
+
+* `try-catch`
 * `InputMismatchException`
-* File Handling
+* Input validation
+* Handling invalid user input
+
+### File Handling
+
 * `File`
 * `FileReader`
 * `FileWriter`
 * `BufferedReader`
 * `BufferedWriter`
-* Reading and writing files
-* Data Persistence
-* Passing objects and collections to methods
+* Creating files
+* Reading files
+* Writing files
+* Checking whether files exist
+* Listing files in a directory
+* Deleting files
+* File-based data persistence
+
+### Data Management
+
+* Creating databases
+* Loading databases
+* Updating databases
+* Saving database changes
+* Deleting databases
+* Managing student records using `ArrayList<Student>`
+
+---
+
+## 📈 Project Progress
+
+```text
+SGMS V1
+   │
+   ├── Basic Student Management
+   ├── Add Student
+   ├── Remove Student
+   ├── View Students
+   ├── Update Marks
+   ├── Grade Assignment
+   └── Sorting
+        │
+        ▼
+SGMS V2
+   │
+   ├── Database Creation
+   ├── Database Loading
+   ├── Database Deletion
+   ├── File Handling
+   ├── Data Persistence
+   ├── Student Search
+   ├── Class Statistics
+   ├── Input Validation
+   └── Exception Handling
+```
 
 ---
 
