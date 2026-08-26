@@ -69,7 +69,7 @@ It focuses on implementing basic student management functionality using a consol
 
 ---
 
-## 🟡 Version 2 — File Handling & Data Persistence
+## 🟡 Version 2 — File Handling & Data Persistence 
 
 **Version 2** builds upon Version 1 by introducing file handling and a database-like system using `.txt` files.
 
