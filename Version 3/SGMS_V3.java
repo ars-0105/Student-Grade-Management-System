@@ -31,7 +31,7 @@ class Student {
             return "F ( FAIL )";
         }
     }
-}
+}    
 
 
 public class SGMS_V3 extends JFrame {
