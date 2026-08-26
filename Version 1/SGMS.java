@@ -140,6 +140,7 @@ public class SGMS {
         }
 
 }
+    
     public static void main(String []args){
         Scanner sc= new Scanner(System.in); 
         ArrayList<Student> student = new ArrayList<>();
